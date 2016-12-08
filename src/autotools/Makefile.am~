@@ -7,7 +7,5 @@ maintainer-clean-local:
 	-rm -rf config
 	-rm -r m4
 
-bin_PROGRAMS = src/client/client src/miniserver/miniserver
+bin_PROGRAMS = src/client/client
 client_SOURCES = src/client/client.c
-
-miniserver_SOURCES = src/miniserver/miniserver.c

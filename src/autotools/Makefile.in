@@ -78,7 +78,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = src/client/client$(EXEEXT)
+bin_PROGRAMS = src/client/client$(EXEEXT) \
+	src/miniserver/miniserver$(EXEEXT)
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
@@ -113,6 +114,9 @@ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 am__dirstamp = $(am__leading_dot)dirstamp
+src_miniserver_miniserver_SOURCES = src/miniserver/miniserver.c
+src_miniserver_miniserver_OBJECTS = miniserver.$(OBJEXT)
+src_miniserver_miniserver_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -147,8 +151,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = src/client/client.c
-DIST_SOURCES = src/client/client.c
+SOURCES = src/client/client.c src/miniserver/miniserver.c
+DIST_SOURCES = src/client/client.c src/miniserver/miniserver.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -312,6 +316,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure COPYING \
 
 ACLOCAL_AMFLAGS = -I m4
 client_SOURCES = src/client/client.c
+miniserver_SOURCES = src/miniserver/miniserver.c
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -422,6 +427,13 @@ src/client/$(am__dirstamp):
 src/client/client$(EXEEXT): $(src_client_client_OBJECTS) $(src_client_client_DEPENDENCIES) $(EXTRA_src_client_client_DEPENDENCIES) src/client/$(am__dirstamp)
 	@rm -f src/client/client$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(src_client_client_OBJECTS) $(src_client_client_LDADD) $(LIBS)
+src/miniserver/$(am__dirstamp):
+	@$(MKDIR_P) src/miniserver
+	@: > src/miniserver/$(am__dirstamp)
+
+src/miniserver/miniserver$(EXEEXT): $(src_miniserver_miniserver_OBJECTS) $(src_miniserver_miniserver_DEPENDENCIES) $(EXTRA_src_miniserver_miniserver_DEPENDENCIES) src/miniserver/$(am__dirstamp)
+	@rm -f src/miniserver/miniserver$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(src_miniserver_miniserver_OBJECTS) $(src_miniserver_miniserver_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -430,6 +442,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/miniserver.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -466,12 +479,27 @@ client.obj: src/client/client.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o client.obj `if test -f 'src/client/client.c'; then $(CYGPATH_W) 'src/client/client.c'; else $(CYGPATH_W) '$(srcdir)/src/client/client.c'; fi`
 
+miniserver.o: src/miniserver/miniserver.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT miniserver.o -MD -MP -MF $(DEPDIR)/miniserver.Tpo -c -o miniserver.o `test -f 'src/miniserver/miniserver.c' || echo '$(srcdir)/'`src/miniserver/miniserver.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/miniserver.Tpo $(DEPDIR)/miniserver.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/miniserver/miniserver.c' object='miniserver.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o miniserver.o `test -f 'src/miniserver/miniserver.c' || echo '$(srcdir)/'`src/miniserver/miniserver.c
+
+miniserver.obj: src/miniserver/miniserver.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT miniserver.obj -MD -MP -MF $(DEPDIR)/miniserver.Tpo -c -o miniserver.obj `if test -f 'src/miniserver/miniserver.c'; then $(CYGPATH_W) 'src/miniserver/miniserver.c'; else $(CYGPATH_W) '$(srcdir)/src/miniserver/miniserver.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/miniserver.Tpo $(DEPDIR)/miniserver.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/miniserver/miniserver.c' object='miniserver.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o miniserver.obj `if test -f 'src/miniserver/miniserver.c'; then $(CYGPATH_W) 'src/miniserver/miniserver.c'; else $(CYGPATH_W) '$(srcdir)/src/miniserver/miniserver.c'; fi`
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf src/client/.libs src/client/_libs
+	-rm -rf src/miniserver/.libs src/miniserver/_libs
 
 distclean-libtool:
 	-rm -f libtool config.lt
@@ -732,6 +760,7 @@ distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f src/client/$(am__dirstamp)
+	-rm -f src/miniserver/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
         if (bytes > 0)
         close(connfd);
 	printf("%s",recv_buff);
-	fflush(stdout);
             syslog(LOG_NOTICE, "Message received: %s", recv_buff);
     }
 

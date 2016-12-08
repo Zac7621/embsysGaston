@@ -78,7 +78,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
-bin_PROGRAMS = src/client/client$(EXEEXT)
+bin_PROGRAMS = src/client/client$(EXEEXT) \
+	src/miniserver/miniserver$(EXEEXT)
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
@@ -113,6 +114,9 @@ am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 am__dirstamp = $(am__leading_dot)dirstamp
+src_miniserver_miniserver_SOURCES = src/miniserver/miniserver.c
+src_miniserver_miniserver_OBJECTS = miniserver.$(OBJEXT)
+src_miniserver_miniserver_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -147,8 +151,8 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = src/client/client.c
-DIST_SOURCES = src/client/client.c
+SOURCES = src/client/client.c src/miniserver/miniserver.c
+DIST_SOURCES = src/client/client.c src/miniserver/miniserver.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -193,13 +197,13 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/missing aclocal-1.14
+ACLOCAL = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/missing autoconf
-AUTOHEADER = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/missing autoheader
-AUTOMAKE = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/missing automake-1.14
+AUTOCONF = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/missing autoconf
+AUTOHEADER = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/missing autoheader
+AUTOMAKE = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/missing automake-1.14
 AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -232,7 +236,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/missing makeinfo
+MAKEINFO = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -255,10 +259,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /home/zac/embsys/labs/4_armadeus/src/autotools
-abs_srcdir = /home/zac/embsys/labs/4_armadeus/src/autotools
-abs_top_builddir = /home/zac/embsys/labs/4_armadeus/src/autotools
-abs_top_srcdir = /home/zac/embsys/labs/4_armadeus/src/autotools
+abs_builddir = /home/zac/FFS2/embsysGaston/src/autotools
+abs_srcdir = /home/zac/FFS2/embsysGaston/src/autotools
+abs_top_builddir = /home/zac/FFS2/embsysGaston/src/autotools
+abs_top_srcdir = /home/zac/FFS2/embsysGaston/src/autotools
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -287,7 +291,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/zac/embsys/labs/4_armadeus/src/autotools/config/install-sh
+install_sh = ${SHELL} /home/zac/FFS2/embsysGaston/src/autotools/config/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -312,6 +316,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure COPYING \
 
 ACLOCAL_AMFLAGS = -I m4
 client_SOURCES = src/client/client.c
+miniserver_SOURCES = src/miniserver/miniserver.c
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -422,6 +427,13 @@ src/client/$(am__dirstamp):
 src/client/client$(EXEEXT): $(src_client_client_OBJECTS) $(src_client_client_DEPENDENCIES) $(EXTRA_src_client_client_DEPENDENCIES) src/client/$(am__dirstamp)
 	@rm -f src/client/client$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(src_client_client_OBJECTS) $(src_client_client_LDADD) $(LIBS)
+src/miniserver/$(am__dirstamp):
+	@$(MKDIR_P) src/miniserver
+	@: > src/miniserver/$(am__dirstamp)
+
+src/miniserver/miniserver$(EXEEXT): $(src_miniserver_miniserver_OBJECTS) $(src_miniserver_miniserver_DEPENDENCIES) $(EXTRA_src_miniserver_miniserver_DEPENDENCIES) src/miniserver/$(am__dirstamp)
+	@rm -f src/miniserver/miniserver$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(src_miniserver_miniserver_OBJECTS) $(src_miniserver_miniserver_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -430,6 +442,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/client.Po
+include ./$(DEPDIR)/miniserver.Po
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -466,12 +479,27 @@ client.obj: src/client/client.c
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o client.obj `if test -f 'src/client/client.c'; then $(CYGPATH_W) 'src/client/client.c'; else $(CYGPATH_W) '$(srcdir)/src/client/client.c'; fi`
 
+miniserver.o: src/miniserver/miniserver.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT miniserver.o -MD -MP -MF $(DEPDIR)/miniserver.Tpo -c -o miniserver.o `test -f 'src/miniserver/miniserver.c' || echo '$(srcdir)/'`src/miniserver/miniserver.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/miniserver.Tpo $(DEPDIR)/miniserver.Po
+#	$(AM_V_CC)source='src/miniserver/miniserver.c' object='miniserver.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o miniserver.o `test -f 'src/miniserver/miniserver.c' || echo '$(srcdir)/'`src/miniserver/miniserver.c
+
+miniserver.obj: src/miniserver/miniserver.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT miniserver.obj -MD -MP -MF $(DEPDIR)/miniserver.Tpo -c -o miniserver.obj `if test -f 'src/miniserver/miniserver.c'; then $(CYGPATH_W) 'src/miniserver/miniserver.c'; else $(CYGPATH_W) '$(srcdir)/src/miniserver/miniserver.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/miniserver.Tpo $(DEPDIR)/miniserver.Po
+#	$(AM_V_CC)source='src/miniserver/miniserver.c' object='miniserver.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o miniserver.obj `if test -f 'src/miniserver/miniserver.c'; then $(CYGPATH_W) 'src/miniserver/miniserver.c'; else $(CYGPATH_W) '$(srcdir)/src/miniserver/miniserver.c'; fi`
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf src/client/.libs src/client/_libs
+	-rm -rf src/miniserver/.libs src/miniserver/_libs
 
 distclean-libtool:
 	-rm -f libtool config.lt
@@ -732,6 +760,7 @@ distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f src/client/$(am__dirstamp)
+	-rm -f src/miniserver/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
